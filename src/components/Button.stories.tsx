@@ -5,9 +5,9 @@ export default {
   title: "Example/custom-button",
   component: Button,
   argTypes: {
-    // uppercase: {
-    //   type: "boolean",
-    // },
+    uppercase: {
+      type: "boolean",
+    },
   },
 } as ComponentMeta<typeof Button>;
 
