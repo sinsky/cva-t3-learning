@@ -1,0 +1,25 @@
+name: storybook build static
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: install packages
+        run: yarn
+      - name: build storybook
+        run: yarn build-storybook
+      - name: deploy storybook on github-pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{secrets.GITHUB_TOKEN}}
+          publish_dir: ./storybook-static
