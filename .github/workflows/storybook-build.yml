@@ -46,7 +46,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: |
-            .cache/storybook
+            node_modules/.cache/storybook
           # Generate a new cache whenever packages or source files change.
           key: ${{ runner.os }}-storybook-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
           # If source files changed but packages didn't, rebuild from a prior cache.
@@ -55,7 +55,7 @@ jobs:
       - name: install packages
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
       - name: build storybook
-        run: ${{ steps.detect-package-manager.outputs.runner }} build-storybook
+        run: ${{ steps.detect-package-manager.outputs.runner }} build-storybook -o ./storybook-static/storybook/
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
@@ -70,9 +70,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
-      # - name: deploy storybook on github-pages
-      #   uses: peaceiris/actions-gh-pages@v3
-      #   with:
-      #     github_token: ${{secrets.GITHUB_TOKEN}}
-      #     publish_dir: ./storybook-static
-      #     destination_dir: storybook
